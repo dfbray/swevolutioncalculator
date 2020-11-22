@@ -1,0 +1,11 @@
+digraph "Calculator" {
+  node [shape="box",style="rounded",fontname="Helvetica",fontsize="14"]
+  edge [fontsize="10",fontname="Helvetica"]
+
+  // Node Definitions:
+  "org.swevolution:Calculator:jar"[label=<Calculator>]
+  "org.swevolution.add:Add:jar"[label=<Add>]
+
+  // Edge Definitions:
+  "org.swevolution:Calculator:jar" -> "org.swevolution.add:Add:jar"
+}
