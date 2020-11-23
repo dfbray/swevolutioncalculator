@@ -1,0 +1,16 @@
+digraph "G" {
+node ["fontname"="Times New Roman"]
+"orgswevolutionCalculator" ["shape"="rectangle","label"="Calculator"]
+"orgswevolutionaddAdd" ["shape"="rectangle","label"="Add"]
+"orgswevolutionsubtractSubtract" ["shape"="rectangle","label"="Subtract"]
+"orgswevolutionmultiplyMultiply" ["shape"="rectangle","label"="Multiply"]
+"orgswevolutiondivideDivide" ["shape"="rectangle","label"="Divide"]
+"orgswevolutionCalculator" -> "orgswevolutionaddAdd"
+"orgswevolutionCalculator" -> "orgswevolutionsubtractSubtract"
+"orgswevolutionCalculator" -> "orgswevolutionmultiplyMultiply"
+"orgswevolutionCalculator" -> "orgswevolutiondivideDivide"
+"orgswevolutionmultiplyMultiply" -> "orgswevolutionaddAdd"
+"orgswevolutionmultiplyMultiply" -> "orgswevolutionsubtractSubtract"
+"orgswevolutiondivideDivide" -> "orgswevolutionaddAdd"
+"orgswevolutiondivideDivide" -> "orgswevolutionsubtractSubtract"
+}
