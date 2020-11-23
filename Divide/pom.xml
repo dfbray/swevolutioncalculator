@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.swevolution</groupId>
-    <artifactId>Calculator</artifactId>
+    <groupId>org.swevolution.divide</groupId>
+    <artifactId>Divide</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <repositories>
@@ -27,26 +27,6 @@
             <artifactId>Subtract</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-        <dependency>
-            <groupId>org.swevolution.multiply</groupId>
-            <artifactId>Multiply</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>org.swevolution.divide</groupId>
-            <artifactId>Divide</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
     </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>com.github.ferstl</groupId>
-                <artifactId>depgraph-maven-plugin</artifactId>
-                <version>3.3.0</version>
-            </plugin>
-        </plugins>
-    </build>
 
 </project>
