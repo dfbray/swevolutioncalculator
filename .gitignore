@@ -1,2 +1,4 @@
 .idea/
 *.iml
+bazel-calculator/
+bazel-out/

@@ -1,0 +1,7 @@
+--classpath
+external/maven/v1/http/localhost%3A8000/org/swevolution/Add/Add/1.0-SNAPSHOT/Add-1.0-SNAPSHOT.jar
+external/maven/v1/http/localhost%3A8000/org/swevolution/subtract/Subtract/1.0-SNAPSHOT/Subtract-1.0-SNAPSHOT.jar
+external/maven/v1/http/localhost%3A8000/org/swevolution/multiply/Multiply/1.0-SNAPSHOT/Multiply-1.0-SNAPSHOT.jar
+external/maven/v1/http/localhost%3A8000/org/swevolution/divide/Divide/1.0-SNAPSHOT/Divide-1.0-SNAPSHOT.jar
+--reduce_classpath_mode
+JAVABUILDER_REDUCED

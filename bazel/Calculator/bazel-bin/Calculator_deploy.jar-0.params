@@ -1,0 +1,14 @@
+--output
+bazel-out/x64_windows-fastbuild/bin/Calculator_deploy.jar
+--compression
+--normalize
+--main_class
+Calculator
+--build_info_file
+bazel-out/x64_windows-fastbuild/include/build-info-redacted.properties
+--sources
+bazel-out/x64_windows-fastbuild/bin/Calculator.jar,//:Calculator
+external/maven/v1/http/localhost%3A8000/org/swevolution/Add/Add/1.0-SNAPSHOT/Add-1.0-SNAPSHOT.jar,@@maven//:v1/http/localhost%3A8000/org/swevolution/Add/Add/1.0-SNAPSHOT/Add-1.0-SNAPSHOT.jar
+external/maven/v1/http/localhost%3A8000/org/swevolution/subtract/Subtract/1.0-SNAPSHOT/Subtract-1.0-SNAPSHOT.jar,@@maven//:v1/http/localhost%3A8000/org/swevolution/subtract/Subtract/1.0-SNAPSHOT/Subtract-1.0-SNAPSHOT.jar
+external/maven/v1/http/localhost%3A8000/org/swevolution/multiply/Multiply/1.0-SNAPSHOT/Multiply-1.0-SNAPSHOT.jar,@@maven//:v1/http/localhost%3A8000/org/swevolution/multiply/Multiply/1.0-SNAPSHOT/Multiply-1.0-SNAPSHOT.jar
+external/maven/v1/http/localhost%3A8000/org/swevolution/divide/Divide/1.0-SNAPSHOT/Divide-1.0-SNAPSHOT.jar,@@maven//:v1/http/localhost%3A8000/org/swevolution/divide/Divide/1.0-SNAPSHOT/Divide-1.0-SNAPSHOT.jar
