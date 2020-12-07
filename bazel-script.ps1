@@ -7,9 +7,11 @@ $process = 0
 cd $path
 
 for ($i = 0; $i -lt $iterations; $i++ ) {
-    rm -r -Force .\bazel-bin\*
-	rm -r -Force .\bazel-out\*
-	rm -r -Force .\bazel-$delete\*
+	if($delete -ne "false") {
+		rm -r -Force .\bazel-bin\*
+		rm -r -Force .\bazel-out\*
+		rm -r -Force .\bazel-$delete\*
+	}
     $bazel_id = (Start-Process bazel -ArgumentList "build //:everything_deploy.jar" -passthru).ID
     sleep(1)
 	echo bazel id":" $bazel_id

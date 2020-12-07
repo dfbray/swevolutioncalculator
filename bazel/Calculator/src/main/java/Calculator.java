@@ -13,6 +13,7 @@ public class Calculator {
         System.out.println("Correct answer is -2, our multiply answer is " + Multiply.doMultiplication(2, -1));
         System.out.println("Correct answer is -2, our multiply answer is " + Multiply.doMultiplication(-2, 1));
         System.out.println("Correct answer is 2, our multiply answer is " + Multiply.doMultiplication(-2, -1));
+		System.out.println("bazel!");
         try {
             System.out.println("Correct answer is 1r1, our divide answer is " + Divide.doDivision(4, 3));
             System.out.println("Correct answer is -20, our divide answer is " + Divide.doDivision(60, -3));

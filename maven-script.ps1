@@ -1,12 +1,15 @@
 $path = $args[0]
 $name = $args[1]
-$iterations = $args[2]
+$remove = $args[2]
+$iterations = $args[3]
 $script_home = Get-Location
 cd $path
 
 
 for ($i = 0; $i -lt $iterations; $i++ ) {
-    rm -r -Force .\target
+    if($remove -eq "remove") {
+        rm -r -Force .\target
+    }
     Start-Process mvn -ArgumentList "package -DskipTests"
     sleep(1)
     $process=(ps | grep java| tr -s ' ' | cut -d ' ' -f 7)
