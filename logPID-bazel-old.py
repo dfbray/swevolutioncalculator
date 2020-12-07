@@ -15,13 +15,11 @@ import sys
 import time
 import argparse
 
-#children = []
-#global child_pid
-#child_pid = 0
+children = []
+global child_pid
+child_pid = 0
 
 def get_percent(process):
-   #print(process)
-    #print(process.cpu_percent() / psutil.cpu_count())
     return (process.cpu_percent() / psutil.cpu_count())
 
 
@@ -31,43 +29,33 @@ def get_memory(process):
 
 def all_children(pr):
 
-#    global children
-    #global child_pid
+    global children
+    global child_pid
 
     try:
         children_of_pr = pr.children(recursive=True)
-        #print("children of " + str(pr), children_of_pr)
+        print("children", children_of_pr)
 #        print("child", children_of_pr[0].pid)
-#        child_pid = children_of_pr[0].pid
-    except Exception as e:  # pragma: no cover
-        #print("all children exception")
-        print(e)
-        return []
+        child_pid = children_of_pr[0].pid
+    except Exception:  # pragma: no cover
+        return children
 
-#    for child in children_of_pr:
-#        if child not in children:
-#            children.append(child)
+    for child in children_of_pr:
+        if child not in children:
+            children.append(child)
 
-    #print("children returned: ", children_of_pr)
-    return children_of_pr
+    return children
 
 #def monitor(pid, logfile=None, plot=True, duration=60, interval=1,
 #            include_children=False):
 
 pid = sys.argv[1]
+forbidden_pid = sys.argv[2]
+print('in python', pid)
 pid = int(pid)
-pr = psutil.Process(pid)
-watched_procs = {}
-i = 1
-while i < len(sys.argv):
-    try:
-        watched_procs[(psutil.Process(int(sys.argv[i])))] = True
-    except Exception as e:
-        print(e)
-        pass
-    i = i + 1
-print(watched_procs)
-interval = 0.1
+forbidden_pid = int(forbidden_pid)
+#print("forbidden pid", forbidden_pid)
+interval = .1
 include_children=True
 plot=True
 logfile=True
@@ -75,6 +63,10 @@ logfile=True
     # We import psutil here so that the module can be imported even if psutil
     # is not present (for example if accessing the version)
     #import psutil
+
+pr = psutil.Process(pid)
+if(forbidden_pid != 0):
+    forbidden = psutil.Process(forbidden_pid)
 
     # Record start time
 start_time = time.time()
@@ -95,13 +87,6 @@ log['mem_real'] = [0]
 log['mem_virtual'] = [0]
 
 count = 0
-
-for proc in watched_procs:
-    proc.cpu_percent()
-    
-time.sleep(interval)
-
-print(all_children(pr))
 
 try:
 
@@ -128,63 +113,31 @@ try:
         #    break
 
         # Get current CPU and memory
-#        try:
-#           current_cpu = get_percent(pr)
-#            current_mem = get_memory(pr)
-#        except Exception:
-#            break
-#        current_mem_real = current_mem.rss / 1024. ** 2
-#        current_mem_virtual = current_mem.vms / 1024. ** 2
-        
-        #print("watched processes", watched_procs)
+        try:
+            current_cpu = get_percent(pr)
+            current_mem = get_memory(pr)
+            if(forbidden_pid != 0):
+                current_cpu += get_percent(forbidden)
+                current_mem2 = get_memory(forbidden)
+        except Exception:
+            break
+        current_mem_real = current_mem.rss / 1024. ** 2
+        current_mem_virtual = current_mem.vms / 1024. ** 2
 
-        current_cpu = 0
-        current_mem = 0
-        current_mem_real = 0
-        current_mem_virtual = 0
-
-        new_procs = {}
-        dead_procs = []
-
-        for proc in watched_procs.keys():
-            #print("watched_procs loop ", proc)
-            for child in all_children(proc):
-                if child not in watched_procs:
-                    new_procs[child] = True
-
-        for new_proc in new_procs:
-            if new_proc not in watched_procs.keys():
-                watched_procs[new_proc] = True
-
-        for proc in watched_procs.keys():
-            try:
-                if not proc.is_running():
-                    dead_procs.append(proc)
-                    continue
-                #print(proc_status)
-                current_cpu += get_percent(proc)
-                #print("watched cpu", current_cpu)
-                current_mem = get_memory(proc)
-                current_mem_real += current_mem.rss / 1024. ** 2
-                current_mem_virtual += current_mem.vms / 1024. ** 2
-                    
-            except Exception as e:
-                print(e)
-                pass
-                
-        for dead_proc in dead_procs:
-            watched_procs.pop(dead_proc)
+        if(forbidden_pid != 0):
+            current_mem_real += current_mem2.rss / 1024. ** 2
+            current_mem_virtual += current_mem2.vms / 1024. ** 2
 
         # Get information for children
-#        if include_children:
-#           for child in all_children(pr):
-#                try:
-#                    current_cpu += get_percent(child)
-#                    current_mem = get_memory(child)
-#                except Exception:
-#                    continue
-#                current_mem_real += current_mem.rss / 1024. ** 2
-#                current_mem_virtual += current_mem.vms / 1024. ** 2
+        if include_children:
+            for child in all_children(pr):
+                try:
+                    current_cpu += get_percent(child)
+                    current_mem = get_memory(child)
+                except Exception:
+                    continue
+                current_mem_real += current_mem.rss / 1024. ** 2
+                current_mem_virtual += current_mem.vms / 1024. ** 2
 
         if logfile:
             f.write("{0:12.3f} {1:12.3f} {2:12.3f} {3:12.3f}\n".format(
@@ -242,10 +195,14 @@ if plot:
 
         fig.savefig('img.png')
 
+f = open("../../pid.txt", "w")
+f.write(str(child_pid))
+f.close()
+
 #print('EXITING')
 #print(child_pid)
 
-#sys.exit(child_pid)
+sys.exit(child_pid)
 
 #TODO psrecord $(ps | grep chrome | tr -s ' ' | cut -d ' ' -f 7) --interval 1 --plot plot1.png
 #TODO Change code to check for PID itself, and to run on a while(PID exists) loop

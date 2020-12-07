@@ -1,5 +1,5 @@
 java_binary(
-    name = "Calculator",
+    name = "everything",
     srcs = glob(["src/**/*.java"]),
     main_class = "Calculator",
     deps = [
